@@ -1,0 +1,15 @@
+{
+    "name": "com.ubuntu.developer.vanpivix.keepfocused",
+    "description": "description of KeepFocused",
+    "framework": "ubuntu-sdk-14.04-qml-dev1",
+    "architecture": "all",
+    "title": "KeepFocused",
+    "hooks": {
+        "KeepFocused": {
+            "apparmor": "KeepFocused.json",
+            "desktop": "KeepFocused.desktop"
+        }
+    },
+    "version": "0.1",
+    "maintainer": "Andrea Pivetta <vanpivix@gmail.com>"
+}

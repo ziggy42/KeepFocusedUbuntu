@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=KeepFocused
+Exec=/usr/bin/qmlscene $@ /usr/share/KeepFocused/KeepFocused.qml
+Icon=KeepFocused.png
+Terminal=false
+Type=Application
+X-Ubuntu-Touch=true
