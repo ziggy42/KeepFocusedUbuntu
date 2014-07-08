@@ -8,6 +8,23 @@ import "../JS/preferences.js" as Preferences
 Tab {
     title: i18n.tr("Keep Focused")
 
+    Component.onCompleted: forceActiveFocus()
+
+    Keys.onPressed: {
+        if (event.key == Qt.Key_Left) {
+            console.log("Left");
+            if(button0.enabled === true) click(0)
+        }
+        if (event.key == Qt.Key_Down) {
+            console.log("Down");
+            if(button0.enabled === true) click(1)
+        }
+        if (event.key == Qt.Key_Right) {
+            console.log("Left");
+            if(button0.enabled === true) click(2)
+        }
+    }
+
     property int rectD: 10
     property int currentColor
     property int threshold: units.gu(20)
@@ -226,6 +243,7 @@ Tab {
                 onClicked: click(2)
             }
         }
+
         tools: ToolbarItems {
             ToolbarButton {
                 text: i18n.tr("New Game")
