@@ -12,7 +12,6 @@ Tab {
     property string basicColor: "#DBE9F4"
     property var colors: ['#007FFF', '#D3212D', '#008000']
 
-
     function setUpColors() {
         var index = Math.floor((Math.random() * 3));
         var color = setColorId(Math.floor((Math.random() * 3)));
@@ -22,24 +21,27 @@ Tab {
             rect1.color = color
             rect2.color = basicColor
             rect3.color = basicColor
-
             //animateColor(firstImageView);
             break;
         case 1:
             rect2.color = color
             rect1.color = basicColor
             rect3.color = basicColor
-
             //animateColor(secondImageView);
             break;
         case 2:
             rect3.color = color
             rect2.color = basicColor
             rect1.color = basicColor
-
             //animateColor(thirdImageView);
             break;
         }
+    }
+
+    function restoreColors() {
+        rect1.color = basicColor
+        rect2.color = basicColor
+        rect3.color = basicColor
     }
 
     function setColorId(i) {
@@ -119,7 +121,7 @@ Tab {
             anchors {
                 bottom: parent.bottom
                 horizontalCenter: parent.horizontalCenter
-                bottomMargin: units.gu(2)
+                bottomMargin: units.gu(3)
             }
             spacing: units.gu(5)
 
@@ -141,6 +143,13 @@ Tab {
                 onClicked: click(2)
             }
         }
-
+        tools: ToolbarItems {
+            ToolbarButton {
+                text: i18n.tr("New Game")
+                iconSource: "../graphics/new_game.svg"
+                //onTriggered:
+            }
+        }
     }
+
 }

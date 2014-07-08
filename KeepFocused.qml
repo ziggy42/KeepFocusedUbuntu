@@ -9,8 +9,8 @@ MainView {
     // Note! applicationName needs to match the "name" field of the click manifest
     applicationName: "com.ubuntu.developer.vanpivix.KeepFocused"
 
-    width: units.gu(100)
-    height: units.gu(75)
+    width: units.gu(75)
+    height: units.gu(110)
 
     headerColor: "#28589C"
     backgroundColor: "#00B7EB"
