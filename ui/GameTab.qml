@@ -79,7 +79,6 @@ Tab {
 
     Timer {
         id: timer
-        interval: Preferences.get("INTERVAL",2000);
         running: false;
         repeat: true
         onTriggered: {
@@ -114,8 +113,9 @@ Tab {
             }
 
             Component.onCompleted: {
-                if(parseInt(currentScoreText.text) > Preferences.get("RECORD", 0))
+                if(parseInt(currentScoreText.text) > parseInt(Preferences.get("CURRENTRECORD", 0)))
                     dialogue.text = "Whoa! "+ parseInt(currentScoreText.text) + " is your new Record!"
+                Preferences.set("CURRENTRECORD", currentScoreText.text)
                 currentScoreText.text = "0"
             }
         }
@@ -134,6 +134,7 @@ Tab {
             height:  units.gu(rectD + (rectD/2))
             spacing: units.gu(5)
 
+
             Rectangle {
                 id:rect1
                 height: (root.width/6 < threshold2) ? root.width/6 : threshold2;
@@ -148,6 +149,7 @@ Tab {
                     PropertyAnimation { to: 2 }
                     PropertyAnimation { to: 0 }
                 }
+
             }
 
             Rectangle {
@@ -230,6 +232,7 @@ Tab {
                 iconSource: "../graphics/new_game.svg"
                 onTriggered: {
                     correctAnswer = true;
+                    timer.interval = parseInt(Preferences.get("INTERVAL",2000))
                     timer.running = true
                     disenable(1)
                 }

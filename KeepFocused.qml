@@ -26,9 +26,5 @@ MainView {
         SettingsTab {
             objectName: "settingsTab"
         }
-
-        AboutTab {
-            objectName: "aboutTab"
-        }
     }
 }
