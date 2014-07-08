@@ -10,6 +10,7 @@ Tab {
 
     property int rectD: 10
     property int currentColor
+    property bool correctAnswer: true
     property string basicColor: "#DBE9F4"
     property var colors: ['#007FFF', '#D3212D', '#008000']
 
@@ -53,26 +54,40 @@ Tab {
     function click(i) {
         if (currentColor === i) {
             currentScoreText.text = (parseInt(currentScoreText.text) + 1);
-            //correctAnswer = true;
-            //disenable(false);
+            correctAnswer = true;
+            disenable(0);
         } else {
             gameOver();
         }
     }
 
     function gameOver() {
+        disenable(0)
+        correctAnswer = false;
         timer.running = false
         restoreColors()
         PopupUtils.open(dialog)
     }
 
+    function disenable(way) {
+        button0.enabled = way
+        button1.enabled = way
+        button2.enabled = way
+    }
+
     Timer {
         id: timer
-        interval: Preferences.get("INTERVAL",1000);
+        interval: Preferences.get("INTERVAL",2000);
         running: false;
         repeat: true
         onTriggered: {
-            setUpColors()
+            if(!correctAnswer) {
+                gameOver()
+            } else {
+                correctAnswer = false
+                setUpColors()
+                disenable(1)
+            }
         }
     }
 
@@ -85,6 +100,8 @@ Tab {
                 text: i18n.tr("Try Again")
                 onClicked: {
                     timer.running = true
+                    correctAnswer = true;
+                    disenable(1)
                     PopupUtils.close(dialogue)
                 }
             }
@@ -96,8 +113,7 @@ Tab {
 
             Component.onCompleted: {
                 if(parseInt(currentScoreText.text) > Preferences.get("RECORD", 0))
-                                       dialogue.text = "Whoa! "+ parseInt(currentScoreText.text) + " is your new Record!"
-
+                    dialogue.text = "Whoa! "+ parseInt(currentScoreText.text) + " is your new Record!"
                 currentScoreText.text = "0"
             }
         }
@@ -162,18 +178,21 @@ Tab {
             spacing: units.gu(5)
 
             Button {
+                id: button0
                 color: colors[0]
                 height: root.width/5; width: root.width/5
                 onClicked: click(0)
             }
 
             Button {
+                id: button1
                 color: colors[1]
                 height: root.width/5; width: root.width/5
                 onClicked: click(1)
             }
 
             Button {
+                id: button2
                 color: colors[2]
                 height: root.width/5; width: root.width/5
                 onClicked: click(2)
@@ -184,7 +203,9 @@ Tab {
                 text: i18n.tr("New Game")
                 iconSource: "../graphics/new_game.svg"
                 onTriggered: {
+                    correctAnswer = true;
                     timer.running = true
+                    disenable(1)
                 }
             }
         }
