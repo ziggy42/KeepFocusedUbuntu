@@ -38,8 +38,3 @@ function get(setting, default_value) {
     };
     return res
 }
-
-function getCurrency() {
-    var options = ['€','£','$']
-    return options[get("Currency",0)]
-}

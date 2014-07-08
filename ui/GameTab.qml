@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import QtQuick.LocalStorage 2.0
+import Ubuntu.Components.Popups 0.1
 import Ubuntu.Components 0.1
 import "../components"
 import "../JS/preferences.js" as Preferences
@@ -50,20 +51,55 @@ Tab {
     }
 
     function click(i) {
-        console.log("currentColor: " + currentColor + " i: " + i)
         if (currentColor === i) {
             currentScoreText.text = (parseInt(currentScoreText.text) + 1);
             //correctAnswer = true;
             //disenable(false);
         } else {
-            //gameOver();
+            gameOver();
         }
     }
 
+    function gameOver() {
+        timer.running = false
+        restoreColors()
+        PopupUtils.open(dialog)
+    }
+
     Timer {
-        interval: Preferences.get("INTERVAL",1000); running: true; repeat: true
+        id: timer
+        interval: Preferences.get("INTERVAL",1000);
+        running: false;
+        repeat: true
         onTriggered: {
             setUpColors()
+        }
+    }
+
+    Component {
+        id: dialog
+        Dialog {
+            id: dialogue
+            title: i18n.tr("You lose")
+            Button {
+                text: i18n.tr("Try Again")
+                onClicked: {
+                    timer.running = true
+                    PopupUtils.close(dialogue)
+                }
+            }
+            Button {
+                text: i18n.tr("Cancel")
+                color: UbuntuColors.orange
+                onClicked: PopupUtils.close(dialogue)
+            }
+
+            Component.onCompleted: {
+                if(parseInt(currentScoreText.text) > Preferences.get("RECORD", 0))
+                                       dialogue.text = "Whoa! "+ parseInt(currentScoreText.text) + " is your new Record!"
+
+                currentScoreText.text = "0"
+            }
         }
     }
 
@@ -147,7 +183,9 @@ Tab {
             ToolbarButton {
                 text: i18n.tr("New Game")
                 iconSource: "../graphics/new_game.svg"
-                //onTriggered:
+                onTriggered: {
+                    timer.running = true
+                }
             }
         }
     }
