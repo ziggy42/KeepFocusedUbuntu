@@ -10,6 +10,8 @@ Tab {
 
     property int rectD: 10
     property int currentColor
+    property int threshold: units.gu(20)
+    property int threshold2: units.gu(15)
     property bool correctAnswer: true
     property string basicColor: "#DBE9F4"
     property var colors: ['#007FFF', '#D3212D', '#008000']
@@ -23,19 +25,19 @@ Tab {
             rect1.color = color
             rect2.color = basicColor
             rect3.color = basicColor
-            //animateColor(firstImageView);
+            rect1animation.running = true
             break;
         case 1:
             rect2.color = color
             rect1.color = basicColor
             rect3.color = basicColor
-            //animateColor(secondImageView);
+            rect2animation.running = true
             break;
         case 2:
             rect3.color = color
             rect2.color = basicColor
             rect1.color = basicColor
-            //animateColor(thirdImageView);
+            rect3animation.running = true
             break;
         }
     }
@@ -129,34 +131,55 @@ Tab {
                 top: parent.top
                 topMargin: units.gu(2)
             }
-            height: units.gu(rectD + (rectD/2))
+            height:  units.gu(rectD + (rectD/2))
             spacing: units.gu(5)
 
             Rectangle {
                 id:rect1
-                height: units.gu(rectD)
-                width: units.gu(rectD)
+                height: (root.width/6 < threshold2) ? root.width/6 : threshold2;
+                width: height
                 color: basicColor
                 anchors.verticalCenter: parent.verticalCenter
-                radius: units.gu(rectD/2)
+                radius: height/2
+
+                SequentialAnimation on border.width {
+                    id: rect1animation
+                    running: false
+                    PropertyAnimation { to: 2 }
+                    PropertyAnimation { to: 0 }
+                }
             }
 
             Rectangle {
                 id:rect2
-                height: units.gu(rectD)
-                width: units.gu(rectD)
+                height: (root.width/6 < threshold2) ? root.width/6 : threshold2;
+                width: height
                 color: basicColor
                 anchors.verticalCenter: parent.verticalCenter
-                radius: units.gu(rectD/2)
+                radius: height/2
+
+                SequentialAnimation on border.width {
+                    id: rect2animation
+                    running: false
+                    PropertyAnimation { to: 2 }
+                    PropertyAnimation { to: 0 }
+                }
             }
 
             Rectangle {
                 id:rect3
-                height: units.gu(rectD)
-                width: units.gu(rectD)
+                height: (root.width/6 < threshold2) ? root.width/6 : threshold2;
+                width: height
                 color: basicColor
                 anchors.verticalCenter: parent.verticalCenter
-                radius: units.gu(rectD/2)
+                radius: height/2
+
+                SequentialAnimation on border.width {
+                    id: rect3animation
+                    running: false
+                    PropertyAnimation { to: 2 }
+                    PropertyAnimation { to: 0 }
+                }
             }
         }
 
@@ -180,21 +203,24 @@ Tab {
             Button {
                 id: button0
                 color: colors[0]
-                height: root.width/5; width: root.width/5
+                height: (root.width/5 < threshold) ? root.width/5 : threshold;
+                width: height
                 onClicked: click(0)
             }
 
             Button {
                 id: button1
                 color: colors[1]
-                height: root.width/5; width: root.width/5
+                height: (root.width/5 < threshold) ? root.width/5 : threshold;
+                width: height
                 onClicked: click(1)
             }
 
             Button {
                 id: button2
                 color: colors[2]
-                height: root.width/5; width: root.width/5
+                height: (root.width/5 < threshold) ? root.width/5 : threshold;
+                width: height
                 onClicked: click(2)
             }
         }
