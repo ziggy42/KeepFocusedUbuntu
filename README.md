@@ -6,5 +6,5 @@ This is super simple Ubuntu Game [Android version](https://play.google.com/store
 
 Game Play
 --------------
-![screenshot](http://s22.postimg.org/8ydhq3k1c/Selezione_003.jpg)
+![screenshot](http://s2.postimg.org/xd2oejkmx/Selezione_003.png)
 ![youtube video](https://www.youtube.com/watch?v=IsWQes6kyKY)
