@@ -8,7 +8,9 @@ import "../JS/preferences.js" as Preferences
 Tab {
     title: i18n.tr("Keep Focused")
 
-    Component.onCompleted: forceActiveFocus()
+    Component.onCompleted: {
+        forceActiveFocus()
+    }
 
     Keys.onPressed: {
         if (event.key == Qt.Key_Left) {
@@ -130,9 +132,10 @@ Tab {
             }
 
             Component.onCompleted: {
-                if(parseInt(currentScoreText.text) > parseInt(Preferences.get("CURRENTRECORD", 0)))
+                if(parseInt(currentScoreText.text) > parseInt(Preferences.get("CURRENTRECORD", 0))) {
                     dialogue.text = "Whoa! "+ parseInt(currentScoreText.text) + " is your new Record!"
-                Preferences.set("CURRENTRECORD", currentScoreText.text)
+                    Preferences.set("CURRENTRECORD", currentScoreText.text)
+                }
                 currentScoreText.text = "0"
             }
         }
